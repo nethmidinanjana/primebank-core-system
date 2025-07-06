@@ -70,5 +70,5 @@ This project is part of an academic assignment and is not intended for commercia
 
 ## 👤 Author
 
-[Nethmi Dinanjana](https://github.com/nethmidinanjana)
+[Nethmi Dinanjana](https://github.com/nethmidinanjana) <br/>
 Undergraduate Student – Software Engineering
