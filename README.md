@@ -48,6 +48,7 @@ cd primebank-core-system
 
 - Create a database named primebank_db
 - Update persistence.xml with your DB credentials
+  
 
 3. Build the Project
 
@@ -63,3 +64,11 @@ mvn clean install
 
 - Ensure database and JDBC resources are configured
 
+## 📄 License
+
+This project is part of an academic assignment and is not intended for commercial use.
+
+## 👤 Author
+
+[Nethmi Dinanjana](https://github.com/nethmidinanjana)
+Undergraduate Student – Software Engineering
