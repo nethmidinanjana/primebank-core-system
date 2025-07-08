@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>lk.nd.app</groupId>
+        <artifactId>primebank-core-system</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>primebank-ear</artifactId>
+    <packaging>ear</packaging>
+    <name>primebank-ear</name>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>lk.nd.app</groupId>
+            <artifactId>primebank-core</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>lk.nd.app</groupId>
+            <artifactId>primebank-ejb</artifactId>
+            <version>1.0</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>lk.nd.app</groupId>
+            <artifactId>primebank-web</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules>
+                        <ejbModule>
+                            <groupId>lk.nd.app</groupId>
+                            <artifactId>primebank-ejb</artifactId>
+                            <bundleFileName>ejb-module.jar</bundleFileName>
+                        </ejbModule>
+                        <webModule>
+                            <groupId>lk.nd.app</groupId>
+                            <artifactId>primebank-web</artifactId>
+                            <contextRoot>/primebank-app</contextRoot>
+                            <bundleFileName>web-module.jar</bundleFileName>
+                        </webModule>
+                        <jarModule>
+                            <groupId>lk.nd.app</groupId>
+                            <artifactId>primebank-core</artifactId>
+                            <bundleDir>lib</bundleDir>
+                            <bundleFileName>core-module.jar</bundleFileName>
+                        </jarModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

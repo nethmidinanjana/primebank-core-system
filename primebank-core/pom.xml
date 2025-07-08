@@ -3,17 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>lk.nd.app</groupId>
+        <artifactId>primebank-core-system</artifactId>
+        <version>1.0</version>
+    </parent>
 
-    <groupId>lk.nd.app</groupId>
-    <artifactId>primebank-core-system</artifactId>
-    <version>1.0</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>primebank-core</module>
-        <module>primebank-ejb</module>
-        <module>primebank-web</module>
-        <module>primebank-ear</module>
-    </modules>
+    <artifactId>primebank-core</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -23,9 +19,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.13.1</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <version>10.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
