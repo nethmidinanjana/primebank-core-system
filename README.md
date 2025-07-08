@@ -66,7 +66,9 @@ mvn clean install
 
 ## 📄 License
 
-This project is part of an academic assignment and is not intended for commercial use.
+This project is part of an academic assignment and is not intended for commercial use. <br/>
+**This source code is for viewing purposes only.** <br/>
+**You may not copy, modify, distribute, or use it without permission.**
 
 ## 👤 Author
 
