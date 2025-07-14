@@ -50,22 +50,24 @@
                 <configuration>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <modules>
-                        <ejbModule>
-                            <groupId>lk.nd.app</groupId>
-                            <artifactId>primebank-ejb</artifactId>
-                            <bundleFileName>ejb-module.jar</bundleFileName>
-                        </ejbModule>
                         <webModule>
                             <groupId>lk.nd.app</groupId>
                             <artifactId>primebank-web</artifactId>
                             <contextRoot>/primebank-app</contextRoot>
-                            <bundleFileName>web-module.jar</bundleFileName>
+                            <bundleFileName>primebank-web.war</bundleFileName>
                         </webModule>
+
+                        <ejbModule>
+                            <groupId>lk.nd.app</groupId>
+                            <artifactId>primebank-ejb</artifactId>
+                            <bundleFileName>primebank-ejb.jar</bundleFileName>
+                        </ejbModule>
+
                         <jarModule>
                             <groupId>lk.nd.app</groupId>
                             <artifactId>primebank-core</artifactId>
                             <bundleDir>lib</bundleDir>
-                            <bundleFileName>core-module.jar</bundleFileName>
+                            <bundleFileName>primebank-core.jar</bundleFileName>
                         </jarModule>
                     </modules>
                 </configuration>

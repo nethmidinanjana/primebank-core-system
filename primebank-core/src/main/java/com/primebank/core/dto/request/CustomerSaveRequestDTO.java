@@ -2,9 +2,10 @@ package com.primebank.core.dto.request;
 
 import com.primebank.core.entity.enums.Gender;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class CustomerSaveRequestDTO {
+public class CustomerSaveRequestDTO implements Serializable {
     private String fullName;
     private String email;
     private String address;

@@ -1,6 +1,8 @@
 package com.primebank.core.dto.response;
 
-public class ResponseDTO<T> {
+import java.io.Serializable;
+
+public class ResponseDTO<T> implements Serializable {
     private T data;
     private boolean status;
     private String message;

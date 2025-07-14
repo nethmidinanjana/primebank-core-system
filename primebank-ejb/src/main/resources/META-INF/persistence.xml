@@ -16,6 +16,10 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.enhancer.enableLazyInitialization" value="false"/>
+            <property name="hibernate.enhancer.enableDirtyTracking" value="false"/>
+            <property name="hibernate.enhancer.enableAssociationManagement" value="false"/>
         </properties>
 
     </persistence-unit>

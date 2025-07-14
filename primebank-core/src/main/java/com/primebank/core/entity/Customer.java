@@ -9,6 +9,14 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customers")
+@NamedQueries({
+        @NamedQuery(name = "Customer.findAll", query = "SELECT c from Customer c"),
+        @NamedQuery(name = "Customer.getCustomerCountByNic", query = "SELECT COUNT(c) FROM Customer c WHERE c.nic = :nic"),
+        @NamedQuery(name = "Customer.getCustomerCountByBirthCert", query = "SELECT COUNT(c) FROM Customer c WHERE c.birthCertificateNo = :bcNo"),
+        @NamedQuery(name = "Customer.findByNic", query = "SELECT c from Customer c where c.nic = :nic"),
+        @NamedQuery(name = "Customer.findByName", query = "SELECT c from Customer c WHERE LOWER(c.fullName) LIKE LOWER(CONCAT('%', :name, '%'))"),
+        @NamedQuery(name = "Customer.existsByEmailOrNic", query = "SELECT COUNT(c) from Customer c WHERE c.email = :email OR c.nic = :nic"),
+})
 public class Customer {
 
     @Id
@@ -23,10 +31,9 @@ public class Customer {
 
     private String address;
 
-    @Column(unique = true)
     private String nic; // Optional – only for adults
 
-    @Column(name = "birth_certificate_no", unique = true)
+    @Column(name = "birth_certificate_no")
     private String birthCertificateNo; // Optional – only for minors
 
     @Column(name = "contact_number", nullable = false)
