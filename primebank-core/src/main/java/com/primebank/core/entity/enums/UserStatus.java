@@ -1,5 +1,5 @@
 package com.primebank.core.entity.enums;
 
-public enum CustomerStatus {
+public enum UserStatus {
     ACTIVE, INACTIVE, BLOCKED, SUSPENDED
 }

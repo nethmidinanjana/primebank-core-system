@@ -5,8 +5,10 @@ import com.primebank.core.dto.response.ResponseDTO;
 import com.primebank.core.entity.Customer;
 import jakarta.ejb.Local;
 import jakarta.ejb.Remote;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 @Local
 public interface UserService {
@@ -30,4 +32,8 @@ public interface UserService {
 
     // SECURITY OR METADATA
     boolean customerExistsByEmailOrNic(String email, String nic);
+
+    // LOGIN
+    ResponseDTO<Map<String, Object>> login(String username, String password, HttpServletRequest req);
+
 }

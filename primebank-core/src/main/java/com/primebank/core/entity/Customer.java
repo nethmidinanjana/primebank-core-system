@@ -1,6 +1,6 @@
 package com.primebank.core.entity;
 
-import com.primebank.core.entity.enums.CustomerStatus;
+import com.primebank.core.entity.enums.UserStatus;
 import com.primebank.core.entity.enums.Gender;
 import jakarta.persistence.*;
 
@@ -46,9 +46,10 @@ public class Customer {
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
-    private CustomerStatus status = CustomerStatus.ACTIVE;
+    private UserStatus status = UserStatus.ACTIVE;
 
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] photo;
 
     @Column(name = "created_at")
@@ -155,11 +156,11 @@ public class Customer {
         this.gender = gender;
     }
 
-    public CustomerStatus getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CustomerStatus status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 
@@ -175,15 +176,8 @@ public class Customer {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

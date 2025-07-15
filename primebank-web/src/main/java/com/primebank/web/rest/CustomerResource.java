@@ -9,6 +9,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -47,7 +48,14 @@ public class CustomerResource {
         return dto;
     }
 
-//    @RolesAllowed({"ADMIN", "TELLER", "MANAGER"})
+    @OPTIONS
+    @Path("{any:.*}")
+    public Response handlePreflight() {
+        return Response.ok().build();
+    }
+
+
+    @RolesAllowed({"ADMIN", "TELLER", "MANAGER"})
     @POST
     @Path("/save")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -79,7 +87,7 @@ public class CustomerResource {
         }
     }
 
-//    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
+    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,14 +100,14 @@ public class CustomerResource {
         }
     }
 
-//    @RolesAllowed({"ADMIN","TELLER","MANAGER","AUDITOR"})
+    @RolesAllowed({"ADMIN","TELLER","MANAGER","AUDITOR"})
     @GET
     @Path("/all")
     public ResponseDTO<List<Customer>> getAllCustomers() {
         return userService.getAllCustomers();
     }
 
-//    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
+    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
     @PUT
     @Path("/{id}")
     public ResponseDTO<String> updateCustomer(
@@ -125,7 +133,7 @@ public class CustomerResource {
         }
     }
 
-//    @RolesAllowed({"ADMIN"})
+    @RolesAllowed({"ADMIN"})
     @DELETE
     @Path("/{id}")
     public ResponseDTO<String> deleteCustomer(@PathParam("id") String id) {
@@ -139,21 +147,21 @@ public class CustomerResource {
 
     @GET
     @Path("/get-by-nic")
-//    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
+    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
     public ResponseDTO<Customer> searchCustomerByNic(@QueryParam("nic") String nic) {
         return userService.searchCustomerByNic(nic);
     }
 
     @GET
     @Path("/get-by-name")
-//    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
+    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
     public ResponseDTO<List<Customer>> searchCustomerByName(@QueryParam("name") String name) {
         return userService.searchCustomerByName(name);
     }
 
     @GET
     @Path("/exists")
-//    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
+    @RolesAllowed({"ADMIN","TELLER","MANAGER"})
     public boolean customerExistsByEmailOrNic(@QueryParam("email") String email,
                                               @QueryParam("nic") String nic) {
         return userService.customerExistsByEmailOrNic(email, nic);
