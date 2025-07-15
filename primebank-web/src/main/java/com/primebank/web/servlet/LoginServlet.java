@@ -2,6 +2,7 @@ package com.primebank.web.servlet;
 
 import com.primebank.core.dto.response.ResponseDTO;
 import com.primebank.ejb.service.UserService;
+import com.primebank.ejb.util.PasswordUtil;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

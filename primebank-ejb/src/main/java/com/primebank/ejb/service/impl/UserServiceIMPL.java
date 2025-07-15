@@ -8,6 +8,7 @@ import com.primebank.core.entity.User;
 import com.primebank.core.entity.enums.UserRole;
 import com.primebank.core.entity.enums.UserStatus;
 import com.primebank.ejb.service.UserService;
+import com.primebank.ejb.util.PasswordUtil;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
@@ -174,7 +175,9 @@ public class UserServiceIMPL implements UserService {
         try {
             User user = em.createNamedQuery("User.getUserByUsernameAndStatus", User.class).setParameter("username", username).setParameter("status", UserStatus.ACTIVE).getSingleResult();
 
-            if(!user.getPassword().equals(password)) {
+            String hashedPassword = PasswordUtil.hashedPassword(password);
+
+            if(!user.getPassword().equals(hashedPassword)) {
                return new ResponseDTO<>(null, false, "Incorrect password");
             }
 
