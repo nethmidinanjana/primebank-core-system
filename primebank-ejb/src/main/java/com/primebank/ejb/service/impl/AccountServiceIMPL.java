@@ -4,7 +4,10 @@ import com.primebank.core.dto.request.AccountCreateRequestDTO;
 import com.primebank.core.dto.response.ResponseDTO;
 import com.primebank.core.entity.Account;
 import com.primebank.core.entity.Customer;
+import com.primebank.core.entity.Transaction;
 import com.primebank.core.entity.enums.AccountType;
+import com.primebank.core.entity.enums.TransactionType;
+import com.primebank.ejb.exception.InsufficientFundsException;
 import com.primebank.ejb.service.AccountService;
 import com.primebank.ejb.service.UserService;
 import com.primebank.ejb.service.timer.InterestCalculationTimer;
@@ -16,6 +19,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Stateless
 public class AccountServiceIMPL implements AccountService {
@@ -56,6 +61,16 @@ public class AccountServiceIMPL implements AccountService {
 
             em.persist(account);
 
+            Transaction transaction = new Transaction();
+            transaction.setFromAccount(null); // Bank
+            transaction.setToAccount(account);
+            transaction.setAmount(account.getBalance());
+            transaction.setType(TransactionType.DEPOSIT);
+            transaction.setCreatedAt(LocalDateTime.now());
+            transaction.setDescription("Initial deposit at account creation");
+
+            em.persist(transaction);
+
             em.flush();
             interestCalculationTimer.scheduleInterestCalculation(account.getId());
 
@@ -64,6 +79,51 @@ public class AccountServiceIMPL implements AccountService {
             return new ResponseDTO<>(null, false, "Failed to create account: " + e.getMessage());
         }
     }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public ResponseDTO<String> transferFunds(String fromAccountNo, String toAccountNo, BigDecimal amount, String description)
+            throws InsufficientFundsException {
+
+        Account fromAccount = getAccountByAccountNumber(fromAccountNo);
+
+        Account toAccount = getAccountByAccountNumber(toAccountNo);
+
+        if (fromAccount == null || toAccount == null) {
+            return new ResponseDTO<>(null, false, "Account not found");
+        }
+
+        if (fromAccount.getBalance().compareTo(amount) < 0) {
+            throw new InsufficientFundsException("Insufficient funds in source account");
+        }
+
+        fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
+        toAccount.setBalance(toAccount.getBalance().add(amount));
+
+        em.merge(fromAccount);
+        em.merge(toAccount);
+
+        Transaction transaction = new Transaction();
+        transaction.setFromAccount(fromAccount);
+        transaction.setToAccount(toAccount);
+        transaction.setAmount(amount);
+        transaction.setType(TransactionType.TRANSFER);
+        transaction.setDescription(description != null ? description : "Fund Transfer");
+
+        em.persist(transaction);
+
+        return new ResponseDTO<>(null, true, "Transfer successful");
+    }
+
+    @Override
+    public Account getAccountByAccountNumber(String accountNumber) {
+        List<Account> results = em.createNamedQuery("Account.findByAccountNumber", Account.class)
+                .setParameter("accountNumber", accountNumber)
+                .getResultList();
+
+        return results.isEmpty() ? null : results.get(0);
+    }
+
 
     private String generateAccountNumber() {
         String accNo;

@@ -69,6 +69,20 @@
                 <div class="stat-label">Total Value</div>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Quick Actions</h2>
+                <p class="card-subtitle">Common banking operations</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <a href="transfer.jsp" class="btn btn-primary">Transfer Money</a>
+                <button class="btn btn-secondary">Pay Bills</button>
+                <button class="btn btn-secondary">View Statements</button>
+                <button class="btn btn-secondary">Contact Support</button>
+            </div>
+        </div>
         
         <div class="card">
             <div class="card-header">
@@ -121,19 +135,7 @@
             </div>
         </div>
         
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Quick Actions</h2>
-                <p class="card-subtitle">Common banking operations</p>
-            </div>
-            
-            <div class="dashboard-grid">
-                <button class="btn btn-primary">Transfer Money</button>
-                <button class="btn btn-secondary">Pay Bills</button>
-                <button class="btn btn-secondary">View Statements</button>
-                <button class="btn btn-secondary">Contact Support</button>
-            </div>
-        </div>
+
     </main>
     
     <jsp:include page="/includes/footer.jsp" />

@@ -69,3 +69,41 @@ async function createAccount(){
         alert("❌ Something went wrong while creating the account.");
     }
 }
+
+
+async function submitTransfer() {
+    const fromAcc = document.getElementById("fromAccount").value;
+    const toAcc = document.getElementById("toAccount").value;
+    const amount = document.getElementById("amount").value;
+    const description = document.getElementById("description").value;
+
+    const data = {
+        fromAccount: fromAcc,
+        toAccount: toAcc,
+        amount: parseFloat(amount),
+        description: description
+    };
+
+    const response = await fetch(`${contextPath}/api/accounts/transfer`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        credentials: 'include'
+    });
+
+    const result = await response.json();
+
+    console.log(result);
+    if (result.status) {
+        alert("✅ Fund transfer successful.");
+        window.location.href = `${contextPath}/user/dashboard.jsp`;
+    } else {
+        console.log("❌ " + result.message);
+        const errorBox = document.getElementById('transfer-error');
+        errorBox.textContent = result.message || "An error occurred.";
+        errorBox.style.display = 'block';
+    }
+
+}

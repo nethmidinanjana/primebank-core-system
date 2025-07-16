@@ -9,6 +9,7 @@
         <class>com.primebank.core.entity.Account</class>
         <class>com.primebank.core.entity.Employee</class>
         <class>com.primebank.core.entity.User</class>
+        <class>com.primebank.core.entity.Transaction</class>
 
         <properties>
             <property name="hibernate.transaction.jta.platform"
