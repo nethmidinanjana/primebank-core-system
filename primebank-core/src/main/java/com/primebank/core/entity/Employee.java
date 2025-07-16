@@ -1,6 +1,6 @@
 package com.primebank.core.entity;
 
-import com.primebank.core.entity.enums.UserStatus;
+import com.primebank.core.entity.enums.Status;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -30,7 +30,7 @@ public class Employee {
     private BigDecimal salary;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserStatus status = UserStatus.ACTIVE;
+    private Status status = Status.ACTIVE;
     private LocalDate hiredDate;
 
     @Column(name = "created_at")
@@ -147,11 +147,11 @@ public class Employee {
         this.salary = salary;
     }
 
-    public UserStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

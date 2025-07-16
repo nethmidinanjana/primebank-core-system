@@ -1,16 +1,15 @@
 package com.primebank.core.entity;
 
 import com.primebank.core.entity.enums.UserRole;
-import com.primebank.core.entity.enums.UserStatus;
+import com.primebank.core.entity.enums.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "User.getUserByUsernameAndStatus", query = "select u from User u where u.username = :username and u.userStatus = :status")
+        @NamedQuery(name = "User.getUserByUsernameAndStatus", query = "select u from User u where u.username = :username and u.status = :status"),
+        @NamedQuery(name = "User.getUserByUsername", query = "select u from User u where u.username = :username"),
 })
 public class User {
 
@@ -34,7 +33,7 @@ public class User {
     private Employee employee;  // Nullable — only if role is EMPLOYEE
 
     @Enumerated(EnumType.STRING)
-    private UserStatus userStatus = UserStatus.ACTIVE;
+    private Status status = Status.ACTIVE;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -112,12 +111,12 @@ public class User {
         this.employee = employee;
     }
 
-    public UserStatus getUserStatus() {
-        return userStatus;
+    public Status getUserStatus() {
+        return status;
     }
 
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
+    public void setUserStatus(Status status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {

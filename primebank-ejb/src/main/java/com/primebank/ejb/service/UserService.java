@@ -29,11 +29,12 @@ public interface UserService {
     //SEARCH
     ResponseDTO<Customer> searchCustomerByNic(String nic);
     ResponseDTO<List<Customer>> searchCustomerByName(String name);
+    ResponseDTO<Customer> findCustomerByEmailOrNic(String identifier);
+    ResponseDTO<Customer> findCustomerByEmail(String email);
+
 
     // SECURITY OR METADATA
     boolean customerExistsByEmailOrNic(String email, String nic);
 
-    // LOGIN
-    ResponseDTO<Map<String, Object>> login(String username, String password, HttpServletRequest req);
 
 }

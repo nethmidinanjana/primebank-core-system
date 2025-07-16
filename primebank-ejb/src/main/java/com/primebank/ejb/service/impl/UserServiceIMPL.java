@@ -3,24 +3,17 @@ package com.primebank.ejb.service.impl;
 import com.primebank.core.dto.request.CustomerSaveRequestDTO;
 import com.primebank.core.dto.response.ResponseDTO;
 import com.primebank.core.entity.Customer;
-import com.primebank.core.entity.Employee;
-import com.primebank.core.entity.User;
-import com.primebank.core.entity.enums.UserRole;
-import com.primebank.core.entity.enums.UserStatus;
+import com.primebank.core.entity.enums.Status;
 import com.primebank.ejb.service.UserService;
-import com.primebank.ejb.util.PasswordUtil;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Stateless
@@ -126,7 +119,7 @@ public class UserServiceIMPL implements UserService {
                 return new ResponseDTO<>(null, false, "Customer not found with ID: " + id);
             }
 
-            customer.setStatus(UserStatus.INACTIVE);
+            customer.setStatus(Status.INACTIVE);
             em.merge(customer);
             return new ResponseDTO<>(null, true, "Customer deleted successfully");
         } catch (Exception e) {
@@ -163,46 +156,40 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
+    @RolesAllowed({"ADMIN", "TELLER", "MANAGER"})
+    public ResponseDTO<Customer> findCustomerByEmailOrNic(String identifier) {
+        try {
+            Customer customer = em.createNamedQuery(
+                            "Customer.findByEmailOrNic", Customer.class)
+                    .setParameter("id", identifier)
+                    .getSingleResult();
+
+            return new ResponseDTO<>(customer, true, "Customer found");
+        } catch (NoResultException e) {
+            return new ResponseDTO<>(null, false, "Customer not found");
+        }
+    }
+
+    @Override
+    @RolesAllowed({"ADMIN", "TELLER", "MANAGER"})
+    public ResponseDTO<Customer> findCustomerByEmail(String email) {
+        try {
+            Customer customer = em.createNamedQuery(
+                            "Customer.findByEmail", Customer.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+
+            return new ResponseDTO<>(customer, true, "Customer found");
+        } catch (NoResultException e) {
+            return new ResponseDTO<>(null, false, "Customer not found");
+        }
+    }
+
+
+    @Override
     @RolesAllowed({"ADMIN","TELLER","MANAGER"})
     public boolean customerExistsByEmailOrNic(String email, String nic) {
         Long count = em.createNamedQuery("Customer.existsByEmailOrNic", Long.class).setParameter("email", email).setParameter("nic", nic).getSingleResult();
         return count > 0;
-    }
-
-    @Override
-    public ResponseDTO<Map<String, Object>> login(String username, String password, HttpServletRequest req) {
-
-        try {
-            User user = em.createNamedQuery("User.getUserByUsernameAndStatus", User.class).setParameter("username", username).setParameter("status", UserStatus.ACTIVE).getSingleResult();
-
-            String hashedPassword = PasswordUtil.hashedPassword(password);
-
-            if(!user.getPassword().equals(hashedPassword)) {
-               return new ResponseDTO<>(null, false, "Incorrect password");
-            }
-
-            // set session
-            req.getSession().setAttribute("user", user);
-
-            Map<String, Object> result = new HashMap<>();
-            result.put("role", user.getUserRole());
-
-            if(user.getUserRole() == UserRole.CUSTOMER){
-                Customer customer = user.getCustomer();
-                result.put("name", customer.getFullName());
-                result.put("id", customer.getId());
-            }else{
-                Employee employee = user.getEmployee();
-                result.put("name", employee.getName());
-                result.put("id", employee.getId());
-            }
-
-            return new ResponseDTO<>(result, true, "Login successful");
-
-        }catch (NoResultException exception){
-            return new ResponseDTO<>(null, false, "No user found");
-        } catch (Exception e) {
-            return new ResponseDTO<>(null, false, "Failed to login: " + e.getMessage());
-        }
     }
 }

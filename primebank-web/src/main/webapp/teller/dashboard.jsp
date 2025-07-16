@@ -46,6 +46,21 @@
                 </div>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Quick Actions</h2>
+                <p class="card-subtitle">Common teller operations</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <a href="create-customer.jsp" class="btn btn-primary">Create Customer</a>
+                <a href="create-account.jsp" class="btn btn-secondary">Create Account</a>
+                <button class="btn btn-secondary">Account Lookup</button>
+                <button class="btn btn-secondary">Print Statement</button>
+                <button class="btn btn-secondary">Balance Inquiry</button>
+            </div>
+        </div>
         
         <div class="card">
             <div class="card-header">
@@ -95,20 +110,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Quick Actions</h2>
-                <p class="card-subtitle">Common teller operations</p>
-            </div>
-            
-            <div class="dashboard-grid">
-                <button class="btn btn-primary">New Transaction</button>
-                <button class="btn btn-secondary">Account Lookup</button>
-                <button class="btn btn-secondary">Print Statement</button>
-                <button class="btn btn-secondary">Balance Inquiry</button>
             </div>
         </div>
     </main>

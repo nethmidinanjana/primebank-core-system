@@ -75,6 +75,55 @@ public class CustomerResource {
 
         try {
 
+            ResponseDTO<String> responseDTO = new ResponseDTO<>();
+            if (fullName == null || fullName.isBlank()) {
+                responseDTO.setMessage("Name is required");
+                return responseDTO;
+            }
+
+            if (email == null || !email.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+                responseDTO.setMessage("Valid email is required");
+                return responseDTO;
+            }
+
+            if (address == null || address.isBlank()) {
+                responseDTO.setMessage("Address is required");
+                return responseDTO;
+            }
+
+            if ((nic == null || nic.isBlank()) && (birthCertificateNo == null || birthCertificateNo.isBlank())) {
+                responseDTO.setMessage("Either NIC or Birth Certificate No is required");
+                return responseDTO;
+            }
+
+            if (contactNo == null || !contactNo.matches("^\\d{10}$")) {
+                responseDTO.setMessage("Valid 10-digit contact number is required");
+                return responseDTO;
+            }
+
+            if (dateOfBirth == null || dateOfBirth.isBlank()) {
+                responseDTO.setMessage("Date of birth is required");
+                return responseDTO;
+            }
+
+            if (genderStr == null || (!genderStr.equals("MALE") && !genderStr.equals("FEMALE"))) {
+                responseDTO.setMessage("Gender must be either MALE or FEMALE");
+                return responseDTO;
+            }
+
+            String fileName = fileDetails.getFileName().toLowerCase();
+            if (!(fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png"))) {
+                responseDTO.setMessage("Only JPG, JPEG, or PNG images are allowed");
+                return responseDTO;
+            }
+
+            final int MAX_SIZE = 5 * 1024 * 1024; // 5MB
+            if (fileDetails.getSize() > MAX_SIZE) {
+                responseDTO.setMessage("Image size should be less than 5MB");
+                return responseDTO;
+            }
+
+
             CustomerSaveRequestDTO dto = buildCustomerDto(uploadedInputStream, fullName, email, address, nic,
                     birthCertificateNo, contactNo, dateOfBirth, genderStr);
 

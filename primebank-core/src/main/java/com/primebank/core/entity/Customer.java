@@ -1,6 +1,6 @@
 package com.primebank.core.entity;
 
-import com.primebank.core.entity.enums.UserStatus;
+import com.primebank.core.entity.enums.Status;
 import com.primebank.core.entity.enums.Gender;
 import jakarta.persistence.*;
 
@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
         @NamedQuery(name = "Customer.getCustomerCountByNic", query = "SELECT COUNT(c) FROM Customer c WHERE c.nic = :nic"),
         @NamedQuery(name = "Customer.getCustomerCountByBirthCert", query = "SELECT COUNT(c) FROM Customer c WHERE c.birthCertificateNo = :bcNo"),
         @NamedQuery(name = "Customer.findByNic", query = "SELECT c from Customer c where c.nic = :nic"),
+        @NamedQuery(name = "Customer.findByEmailOrNic", query = "SELECT c FROM Customer c WHERE c.email = :id OR c.nic = :id"),
+        @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
         @NamedQuery(name = "Customer.findByName", query = "SELECT c from Customer c WHERE LOWER(c.fullName) LIKE LOWER(CONCAT('%', :name, '%'))"),
         @NamedQuery(name = "Customer.existsByEmailOrNic", query = "SELECT COUNT(c) from Customer c WHERE c.email = :email OR c.nic = :nic"),
 })
@@ -46,7 +48,7 @@ public class Customer {
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
-    private UserStatus status = UserStatus.ACTIVE;
+    private Status status = Status.ACTIVE;
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")
@@ -156,11 +158,11 @@ public class Customer {
         this.gender = gender;
     }
 
-    public UserStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

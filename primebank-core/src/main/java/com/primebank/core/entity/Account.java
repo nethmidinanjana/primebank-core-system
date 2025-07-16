@@ -1,6 +1,7 @@
 package com.primebank.core.entity;
 
 import com.primebank.core.entity.enums.AccountType;
+import com.primebank.core.entity.enums.Status;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -29,6 +30,9 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "guardian_id")
     private Customer guardian; // optional: guardian for child accounts
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.ACTIVE;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -114,4 +118,11 @@ public class Account {
         return updatedAt;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
