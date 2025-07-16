@@ -7,6 +7,7 @@ import com.primebank.core.entity.Customer;
 import com.primebank.core.entity.Transaction;
 import com.primebank.core.entity.enums.AccountType;
 import com.primebank.core.entity.enums.TransactionType;
+import com.primebank.core.interceptor.Auditable;
 import com.primebank.ejb.exception.InsufficientFundsException;
 import com.primebank.ejb.service.AccountService;
 import com.primebank.ejb.service.UserService;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Stateless
+@Auditable
 public class AccountServiceIMPL implements AccountService {
 
     @PersistenceContext(unitName = "primeBankPU")

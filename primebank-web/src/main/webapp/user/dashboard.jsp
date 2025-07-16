@@ -35,38 +35,20 @@
         <div class="dashboard-grid">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Checking Account</h2>
-                    <p class="card-subtitle">Account #: ****-****-****-1234</p>
-                </div>
-                <div class="stat-number">$5,247.83</div>
-                <div class="stat-label">Available Balance</div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
                     <h2 class="card-title">Savings Account</h2>
                     <p class="card-subtitle">Account #: ****-****-****-5678</p>
                 </div>
                 <div class="stat-number">$12,450.92</div>
                 <div class="stat-label">Available Balance</div>
             </div>
-            
+
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Credit Card</h2>
+                    <h2 class="card-title">Debit Card</h2>
                     <p class="card-subtitle">Card #: ****-****-****-9012</p>
                 </div>
                 <div class="stat-number">$1,234.56</div>
                 <div class="stat-label">Current Balance</div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Investment Account</h2>
-                    <p class="card-subtitle">Portfolio Value</p>
-                </div>
-                <div class="stat-number">$25,678.90</div>
-                <div class="stat-label">Total Value</div>
             </div>
         </div>
 
