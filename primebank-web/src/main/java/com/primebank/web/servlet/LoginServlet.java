@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 
             // Redirect based on role
             if (req.isUserInRole("ADMIN")) {
-                resp.sendRedirect(req.getContextPath() + "/admin/dashboard.jsp");
+                resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
             } else if (req.isUserInRole("MANAGER")) {
                 resp.sendRedirect(req.getContextPath() + "/manager/dashboard.jsp");
             } else if (req.isUserInRole("TELLER")) {

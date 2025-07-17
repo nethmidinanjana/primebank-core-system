@@ -1,6 +1,7 @@
 package com.primebank.ejb.service;
 
 import com.primebank.core.dto.request.CustomerSaveRequestDTO;
+import com.primebank.core.dto.response.CustomerAccountDTO;
 import com.primebank.core.dto.response.ResponseDTO;
 import com.primebank.core.entity.Customer;
 import jakarta.ejb.Local;
@@ -37,4 +38,9 @@ public interface UserService {
     boolean customerExistsByEmailOrNic(String email, String nic);
 
 
+    long getCustomerCount();
+    long getActiveEmployeeCount();
+
+
+    List<CustomerAccountDTO> getCustomerWithAccounts();
 }

@@ -22,7 +22,7 @@
             </div>
             
             <div class="role-grid">
-                <a href="${pageContext.request.contextPath}/admin/dashboard.jsp" class="role-card">
+                <a href="${pageContext.request.contextPath}/admin/dashboard" class="role-card">
                     <div class="role-icon">👨‍💼</div>
                     <h3 class="role-title">Administrator</h3>
                     <p class="role-description">System administration and user management</p>

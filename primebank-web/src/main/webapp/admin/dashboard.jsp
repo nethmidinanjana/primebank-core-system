@@ -1,6 +1,8 @@
 <%@ page import="com.primebank.core.entity.User" %>
 <%@ page import="com.primebank.core.entity.enums.UserRole" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,16 +31,12 @@
             
             <div class="dashboard-grid">
                 <div class="stat-card">
-                    <div class="stat-number">1,247</div>
+                    <div class="stat-number">${customerCount}</div>
                     <div class="stat-label">Total Customers</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">45</div>
+                    <div class="stat-number">${employeeCount}</div>
                     <div class="stat-label">Active Staff</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">System Alerts</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">99.8%</div>
@@ -62,34 +60,18 @@
                             <th>Email</th>
                             <th>Account Type</th>
                             <th>Status</th>
-                            <th>Last Login</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>CUST001</td>
-                            <td>John Smith</td>
-                            <td>john.smith@email.com</td>
-                            <td>Premium</td>
-                            <td>Active</td>
-                            <td>2024-01-15 09:30</td>
-                        </tr>
-                        <tr>
-                            <td>CUST002</td>
-                            <td>Sarah Johnson</td>
-                            <td>sarah.j@email.com</td>
-                            <td>Standard</td>
-                            <td>Active</td>
-                            <td>2024-01-14 14:22</td>
-                        </tr>
-                        <tr>
-                            <td>CUST003</td>
-                            <td>Michael Brown</td>
-                            <td>m.brown@email.com</td>
-                            <td>Business</td>
-                            <td>Pending</td>
-                            <td>2024-01-13 11:45</td>
-                        </tr>
+                        <c:forEach var="c" items="${customerList}">
+                            <tr>
+                                <td>CUST${c.customerId}</td>
+                                <td>${c.name}</td>
+                                <td>${c.email}</td>
+                                <td>${c.accountType}</td>
+                                <td>${c.accountStatus}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

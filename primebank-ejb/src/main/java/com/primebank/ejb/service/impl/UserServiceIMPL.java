@@ -1,6 +1,7 @@
 package com.primebank.ejb.service.impl;
 
 import com.primebank.core.dto.request.CustomerSaveRequestDTO;
+import com.primebank.core.dto.response.CustomerAccountDTO;
 import com.primebank.core.dto.response.ResponseDTO;
 import com.primebank.core.entity.Customer;
 import com.primebank.core.entity.enums.Status;
@@ -191,5 +192,35 @@ public class UserServiceIMPL implements UserService {
     public boolean customerExistsByEmailOrNic(String email, String nic) {
         Long count = em.createNamedQuery("Customer.existsByEmailOrNic", Long.class).setParameter("email", email).setParameter("nic", nic).getSingleResult();
         return count > 0;
+    }
+
+    @Override
+    public long getCustomerCount() {
+        return em.createQuery("SELECT COUNT(c) FROM Customer c", Long.class).getSingleResult();
+    }
+
+    @Override
+    public long getActiveEmployeeCount() {
+        return em.createQuery("SELECT COUNT(e) FROM Employee e WHERE e.status = :status", Long.class)
+                .setParameter("status", Status.ACTIVE)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<CustomerAccountDTO> getCustomerWithAccounts() {
+
+        List<CustomerAccountDTO> results = em.createQuery(
+                "SELECT new com.primebank.core.dto.response.CustomerAccountDTO(" +
+                        "c.id, c.fullName, c.email, a.accountType, a.status) " +
+                        "FROM Account a JOIN a.owner c",
+                CustomerAccountDTO.class
+        ).getResultList();
+
+        for (CustomerAccountDTO dto : results) {
+            System.out.println("DTO: " + dto.getName() + " | " + dto.getEmail() +
+                    " | " + dto.getAccountType() + " | " + dto.getAccountStatus());
+        }
+
+        return results;
     }
 }
