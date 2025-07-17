@@ -34,7 +34,7 @@
                     <p class="role-description">Branch management and oversight</p>
                 </a>
                 
-                <a href="${pageContext.request.contextPath}/teller/dashboard.jsp" class="role-card">
+                <a href="${pageContext.request.contextPath}/teller/dashboard" class="role-card">
                     <div class="role-icon">💰</div>
                     <h3 class="role-title">Teller</h3>
                     <p class="role-description">Customer transactions and services</p>
@@ -46,7 +46,7 @@
                     <p class="role-description">Compliance and audit reports</p>
                 </a>
                 
-                <a href="${pageContext.request.contextPath}/user/dashboard.jsp" class="role-card">
+                <a href="${pageContext.request.contextPath}/user/dashboard" class="role-card">
                     <div class="role-icon">👤</div>
                     <h3 class="role-title">Customer</h3>
                     <p class="role-description">Personal banking dashboard</p>

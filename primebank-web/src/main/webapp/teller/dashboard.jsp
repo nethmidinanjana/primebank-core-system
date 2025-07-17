@@ -1,6 +1,8 @@
 <%@ page import="com.primebank.core.entity.User" %>
 <%@ page import="com.primebank.core.entity.enums.UserRole" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,16 +31,12 @@
             
             <div class="dashboard-grid">
                 <div class="stat-card">
-                    <div class="stat-number">47</div>
+                    <div class="stat-number">${todayCount}</div>
                     <div class="stat-label">Transactions Today</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">$45,230</div>
+                    <div class="stat-number">Rs. ${todayTotalAmount}</div>
                     <div class="stat-label">Total Amount</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Queue Length</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">2.5 min</div>
@@ -80,34 +78,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>14:32</td>
-                            <td>Alice Cooper</td>
-                            <td>Cash Deposit</td>
-                            <td>$1,250.00</td>
-                            <td>Completed</td>
-                        </tr>
-                        <tr>
-                            <td>14:28</td>
-                            <td>Bob Wilson</td>
-                            <td>Cash Withdrawal</td>
-                            <td>$500.00</td>
-                            <td>Completed</td>
-                        </tr>
-                        <tr>
-                            <td>14:25</td>
-                            <td>Carol Davis</td>
-                            <td>Check Deposit</td>
-                            <td>$2,100.00</td>
-                            <td>Processing</td>
-                        </tr>
-                        <tr>
-                            <td>14:20</td>
-                            <td>David Miller</td>
-                            <td>Account Transfer</td>
-                            <td>$750.00</td>
-                            <td>Completed</td>
-                        </tr>
+                        <c:forEach var="tx" items="${transactions}">
+                            <tr>
+                                <td>${tx.time}</td>
+                                <td>${tx.customer}</td>
+                                <td>${tx.type}</td>
+                                <td>${tx.amount}</td>
+                                <td>${tx.status}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

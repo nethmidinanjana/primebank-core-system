@@ -40,10 +40,6 @@
                     <div class="stat-number">8</div>
                     <div class="stat-label">Active Tellers</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">94%</div>
-                    <div class="stat-label">Customer Satisfaction</div>
-                </div>
             </div>
         </div>
         

@@ -40,10 +40,6 @@
                     <div class="stat-number">98.7%</div>
                     <div class="stat-label">Audit Score</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Reports Generated</div>
-                </div>
             </div>
         </div>
         

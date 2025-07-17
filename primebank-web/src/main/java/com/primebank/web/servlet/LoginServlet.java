@@ -48,11 +48,11 @@ public class LoginServlet extends HttpServlet {
             } else if (req.isUserInRole("MANAGER")) {
                 resp.sendRedirect(req.getContextPath() + "/manager/dashboard.jsp");
             } else if (req.isUserInRole("TELLER")) {
-                resp.sendRedirect(req.getContextPath() + "/teller/dashboard.jsp");
+                resp.sendRedirect(req.getContextPath() + "/teller/dashboard");
             } else if (req.isUserInRole("AUDITOR")) {
                 resp.sendRedirect(req.getContextPath() + "/auditor/dashboard.jsp");
             }else if (req.isUserInRole("CUSTOMER")) {
-                resp.sendRedirect(req.getContextPath() + "/user/dashboard.jsp");
+                resp.sendRedirect(req.getContextPath() + "/user/dashboard");
             } else {
                 resp.sendRedirect(req.getContextPath() + "/");
             }

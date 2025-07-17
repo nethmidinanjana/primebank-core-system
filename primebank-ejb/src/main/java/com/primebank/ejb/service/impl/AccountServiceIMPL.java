@@ -18,8 +18,10 @@ import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -126,6 +128,61 @@ public class AccountServiceIMPL implements AccountService {
         return results.isEmpty() ? null : results.get(0);
     }
 
+    @Override
+    public List<Transaction> findTodayTransactions() {
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = LocalDate.now().plusDays(1).atStartOfDay();
+
+        return em.createQuery("SELECT t FROM Transaction t WHERE t.createdAt BETWEEN :start AND :end ORDER BY t.createdAt DESC", Transaction.class)
+                .setParameter("start", startOfDay)
+                .setParameter("end", endOfDay)
+                .setMaxResults(10) // only latest 10
+                .getResultList();
+    }
+
+    @Override
+    public long countTodayTransactions() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime start = today.atStartOfDay();
+        LocalDateTime end = today.plusDays(1).atStartOfDay();
+
+        TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(t) FROM Transaction t WHERE t.createdAt BETWEEN :start AND :end", Long.class
+        );
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public BigDecimal sumTodayTransactionAmounts() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime start = today.atStartOfDay();
+        LocalDateTime end = today.plusDays(1).atStartOfDay();
+
+        TypedQuery<BigDecimal> query = em.createQuery(
+                "SELECT COALESCE(SUM(t.amount), 0) FROM Transaction t WHERE t.createdAt BETWEEN :start AND :end",
+                BigDecimal.class
+        );
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Account getAccountByCustomerId(Long customerId) {
+        return em.createNamedQuery("Account.findByCustomerId", Account.class).setParameter("customerId", customerId).getSingleResult();
+    }
+
+    @Override
+    public List<Transaction> getTransactionsByAccountId(Long accountId) {
+        TypedQuery<Transaction> query = em.createQuery(
+                "SELECT t FROM Transaction t WHERE t.fromAccount.id = :id OR t.toAccount.id = :id ORDER BY t.createdAt DESC",
+                Transaction.class
+        );
+        query.setParameter("id", accountId);
+        return query.getResultList();
+    }
 
     private String generateAccountNumber() {
         String accNo;

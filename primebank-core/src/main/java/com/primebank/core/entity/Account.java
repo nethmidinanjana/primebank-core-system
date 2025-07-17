@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "accounts")
 @NamedQueries({
-        @NamedQuery(name = "Account.findByAccountNumber", query = "select a from Account a where a.accountNumber = :accountNumber")
+        @NamedQuery(name = "Account.findByAccountNumber", query = "select a from Account a where a.accountNumber = :accountNumber"),
+        @NamedQuery(name = "Account.findByCustomerId", query = "select a from Account a where a.owner.id = :customerId"),
 })
 public class Account {
 

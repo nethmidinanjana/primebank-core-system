@@ -1,6 +1,9 @@
 <%@ page import="com.primebank.core.entity.User" %>
 <%@ page import="com.primebank.core.entity.enums.UserRole" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,18 +39,18 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">Savings Account</h2>
-                    <p class="card-subtitle">Account #: ****-****-****-5678</p>
+                    <p class="card-subtitle">Account #: ${accountNumber}</p>
                 </div>
-                <div class="stat-number">$12,450.92</div>
+                <div class="stat-number">Rs. ${balance}</div>
                 <div class="stat-label">Available Balance</div>
             </div>
 
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">Debit Card</h2>
-                    <p class="card-subtitle">Card #: ****-****-****-9012</p>
+                    <p class="card-subtitle">Card #: ${accountNumber}</p>
                 </div>
-                <div class="stat-number">$1,234.56</div>
+                <div class="stat-number">Rs. ${balance}</div>
                 <div class="stat-label">Current Balance</div>
             </div>
         </div>
@@ -80,38 +83,19 @@
                             <th>Description</th>
                             <th>Account</th>
                             <th>Amount</th>
-                            <th>Balance</th>
+                            <th>To</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Jan 15, 2024</td>
-                            <td>Online Purchase - Amazon</td>
-                            <td>Checking</td>
-                            <td>-$89.99</td>
-                            <td>$5,247.83</td>
-                        </tr>
-                        <tr>
-                            <td>Jan 14, 2024</td>
-                            <td>Salary Deposit</td>
-                            <td>Checking</td>
-                            <td>+$3,200.00</td>
-                            <td>$5,337.82</td>
-                        </tr>
-                        <tr>
-                            <td>Jan 13, 2024</td>
-                            <td>ATM Withdrawal</td>
-                            <td>Checking</td>
-                            <td>-$100.00</td>
-                            <td>$2,137.82</td>
-                        </tr>
-                        <tr>
-                            <td>Jan 12, 2024</td>
-                            <td>Transfer to Savings</td>
-                            <td>Checking</td>
-                            <td>-$500.00</td>
-                            <td>$2,237.82</td>
-                        </tr>
+                        <c:forEach var="tx" items="${transactionDTOList}">
+                            <tr>
+                                <td>${tx.createdAtFormatted}</td>
+                                <td>${tx.description}</td>
+                                <td>${tx.accountType}</td>
+                                <td>Rs. ${tx.amount}</td>
+                                <td>${tx.to}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
